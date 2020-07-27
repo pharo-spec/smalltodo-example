@@ -7,8 +7,18 @@ Class {
 	#category : #TODO
 }
 
+{ #category : #actions }
+TODOListPresenter >> addTask [
+
+	TODOTaskPresenter new 
+		task: TODOTask new;
+		openModalWithSpec.
+	self updatePresenter
+]
+
 { #category : #initialization }
 TODOListPresenter >> initializePresenters [
+	| addButton |
 
 	todoListPresenter := self newTable
 		addColumn: ((SpCheckBoxTableColumn evaluated: #isDone) 
@@ -19,8 +29,18 @@ TODOListPresenter >> initializePresenters [
 		addColumn: (SpStringTableColumn title: 'Title' evaluated: #title);
 		yourself.
 
+	addButton := self newButton 
+		label: 'Add task';
+		action: [ self addTask ];
+		yourself.
+
 	self layout: (SpBoxLayout newVertical 
+		spacing: 5;
 		add: todoListPresenter;
+		add: (SpBoxLayout newHorizontal
+				addLast: addButton expand: false;
+				yourself) 
+			expand: false;
 		yourself)
 ]
 
