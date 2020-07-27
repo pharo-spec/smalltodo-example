@@ -35,7 +35,7 @@ TODOTaskPresenter >> initializePresenters [
 	titlePresenter := self newTextInput.
 
 	self layout: (SpBoxLayout newVertical 
-		add: titlePresenter;
+		add: titlePresenter expand: false;
 		yourself).
 ]
 
@@ -46,5 +46,6 @@ TODOTaskPresenter >> task [
 
 { #category : #accessing }
 TODOTaskPresenter >> task: aTask [
-	task := aTask
+	task := aTask.
+	titlePresenter text: (aTask title ifNil: [ '' ])
 ]
