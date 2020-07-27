@@ -222,9 +222,9 @@ TODOTaskPresenter >> initializeDialogWindow: aDialogWindowPresenter
 		initialExtent: 350@120;
 		addButton: 'Accept' do: [ :dialog |
 			self accept.
-			presenter close ];
+			dialog close ];
 		addButton: 'Cancel' do: [ :dialog |
-			presenter close ]
+			dialog close ]
 ```
 
 Here, along with the already known `title:` and `initialExtent:` we added 
