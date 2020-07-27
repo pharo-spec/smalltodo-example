@@ -371,7 +371,7 @@ And now let's define the actions
 ```Smalltalk
 TODOListPresenter >> editSelectedTask
 
-	TODOTaskPresenter new 
+	(TODOTaskPresenter newApplication: self application) 
 		task: todoListPresenter selection selectedItem;
 		openModalWithSpec.
 	self updatePresenter
