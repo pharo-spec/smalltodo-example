@@ -1,4 +1,4 @@
-# 5min tutorial
+# TODO Application: a 15min tutorial
 
 ## Introduction
 This is a small tutorial to give a first look at the world of Spec2 and developing application with it.  
@@ -8,7 +8,7 @@ We will build a small TODO application that will connect a couple of components 
 
 ## Requirements
 
-We will use Voyage to keep our small database, but since this will not be very big and we want to keep things simple, we will use an "in-memory" version of it. You can install it in your image executing:   
+We will use Voyage to keep our small database, but since this will not be very big and we want to keep things simple, we will use an "in-memory" version of it. You can install it in your image executing:
 ```Smalltalk
 Metacello new 
 	repository: 'github://pharo-nosql/voyage';
@@ -81,7 +81,7 @@ While this is not the best way to organise your presenter, for simpleness we wil
 TODOListPresenter >> initializePresenters
 
 	todoListPresenter := self newTable
-		addColumn: ((SpCheckBoxTableColumn title: 'Done' evaluated: #isDone) width: 20);
+		addColumn: ((SpCheckBoxTableColumn evaluated: #isDone) width: 20);
 		addColumn: (SpStringTableColumn title: 'Title' evaluated: #title);
 		yourself.
 
@@ -117,8 +117,7 @@ How does this look?
 ```Smalltalk
 TODOApplication new run.
 ```
-
-@@TODO Figure1
+![Figure 1](figures/figure1.png)
 
 Not bad as a start, isn't?  
 But you will see the window has "Untitled window" as title, and maybe its size is not right.  
@@ -140,7 +139,7 @@ Here we took `aWindowPresenter` (the presenter that contains definition of a win
 
 How it will look now?
 
-@@TODO Figure2 
+![Figure 2](figures/figure2.png)
 
 ### Making checkbox columns actionable
 
@@ -313,7 +312,7 @@ What we did here?
 
 How it looks now?
 
-@@TODO Figure3
+![Figure 3](figures/figure3.png)
 
 ### Add edit and remove
 
@@ -385,7 +384,7 @@ TODOListPresenter >> removeSelectedTask
 As you see, `editSelectedTask` is almost equal to `addTask` but instead adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
 Remove simply takes the selected item and send the `remove` message.
 
-@@TODO Figure4
+![Figure 4](figures/figure4.png)
 
 ## Switching the backend to Gtk
 
@@ -404,7 +403,7 @@ Metacello new
 
 Now, you can execute
 
-```
+```Smalltalk
 TODOApplication new 
 	useBackend: #Gtk;
 	run.
@@ -412,4 +411,5 @@ TODOApplication new
 
 And that's all, you have your todo application runing. 
 
-@@TODO Figure5
+![Figure 5](figures/figure5.png)
+
