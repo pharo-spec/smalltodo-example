@@ -4,7 +4,12 @@
 This is a small tutorial to give a first look at the world of Spec2 and developing application with it.  
 It should not be taken as a comprehensive guide since a lot of details and featurs are left out explicitly to avoid difficult issues. 
   
-We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.   
+We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.
+It will look like Figure *@taskManager@*.
+
+![The Task List Manager.](figures/figure4.png|label=taskManager)
+
+
 
 ## Requirements
 
@@ -56,6 +61,7 @@ TODOTask new title: 'Task Two'; save.
 
 Every application needs an entry point, a place where to configure the basics and start the GUI. Compiled programs have like C have `main()`, Cocoa have the class `NSApplication` and you add a *delegate* to add your configuration and Gtk3 has `GtkApplication`.  
 Pharo is a living environment where many things can be executed at same time, and because of that Spec2 also needs its own entry point: Your application needs to be independent of the rest of system! To do that, Spec2 needs you to extend the class `SpApplication`.  
+
 ```Smalltalk
 SpApplication subclass: #TODOApplication
 	slots: {  }
@@ -66,7 +72,10 @@ SpApplication subclass: #TODOApplication
 Note that an application is not a visual element, it manages the application and information that may be displayed visually such as icons.
 
 You will also need your main window, a TODO list.  
-In Spec2, all components you create inherits from a single root base class: `SpPresenter`. A _presenter_ is how you expose (present) your data to the user.  
+In Spec2, all components that you create inherit (directly or indirectly) from a single root base class: `SpPresenter`. A _presenter_ is how you expose (present) your data to the user.  
+
+
+We create a presenter, named `TODOListPresenter` to hold a list of todo items. 
 
 ```Smalltalk
 SpPresenter subclass: #TODOListPresenter
@@ -246,6 +255,7 @@ TODOTaskPresenter >> accept
 ```
 
 **Tip:** You can test your dialog even if not yet integrated to your application by executing 
+
 ```Smalltalk
 TODOTaskPresenter new 
 	task: TODOTask new;
@@ -388,7 +398,7 @@ TODOListPresenter >> removeSelectedTask
 As you see, `editSelectedTask` is almost equal to `addTask` but instead adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
 Remove simply takes the selected item and send the `remove` message.
 
-![Figure 4](figures/figure4.png)
+![First full version of the Task List Manager ](figures/figure4.png)
 
 ## Switching the backend to Gtk
 
