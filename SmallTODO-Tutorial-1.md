@@ -7,9 +7,9 @@ It should not be taken as a comprehensive guide since a lot of details and featu
 We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.
 It will look like Figure *@taskManager@*.
 
-![The Task List Manager.|label=taskManager](figures/figure4.png)
 
-![First full version of the Task List Manager.](figures/figure4.png?label=task4&width=80)
+![First full version of the Task List Manager. ](figures/figure4.png?label=taskManager&width=80)
+
 
 ## Requirements
 
@@ -106,14 +106,14 @@ TODOListPresenter >> initializePresenters
 
 
 
-Even if we want to manage a list, we use a table because we want to display multiple information side by side.
+Even if we want to manage a list of tasks, we use a table because we want to display multiple information side by side.
 In this case, you are adding to your presenter a table widget, which is a very complex component by itself. Let us explain what each part of it means: 
 
 - `newTable` is the factory method that will create the table component you are going to use to display your TODO list.
 - `addColumn:` is the way you add different table columns (you can have several, if we wanted to have just a single string we would have use a list).
 - `SpCheckBoxTableColumn evaluated: [:aTask | aTask isDone]` will create a table column that will display the status of your TODO task (done or not done).
-- `width: 20` This is to avoid the column to take all available space (otherwise, the table component will distribute the available space proportionally by column).
-- `SpStringTableColumn title: 'Title' evaluated: [:aTask | aTask title])` Same as `SpCheckBoxTableColumn` but it will create a column that has a title and it will to show a string.  
+- `width: 20` is to avoid the column to take all available space (otherwise, the table component will distribute the available space proportionally by column).
+- `SpStringTableColumn title: 'Title' evaluated: [:aTask | aTask title])` is the same as `SpCheckBoxTableColumn` but it will create a column that has a title and it will to show the title of the task as a string.  
 
 And about the layout definition: 
 
