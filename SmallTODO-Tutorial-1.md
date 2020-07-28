@@ -96,7 +96,7 @@ TODOListPresenter >> initializePresenters
 
 	todoListPresenter := self newTable
 		addColumn: ((SpCheckBoxTableColumn evaluated: [:aTask | aTask isDone]) width: 20);
-		addColumn: (SpStringTableColumn title: 'Title' evaluated: #title);
+		addColumn: (SpStringTableColumn title: 'Title' evaluated: [:aTask | aTask title]);
 		yourself.
 
 	self layout: (SpBoxLayout newVertical 
@@ -104,7 +104,7 @@ TODOListPresenter >> initializePresenters
 		yourself) 
 ```
 
-[Pharo web site](http://www.pharo.org|alt=Pharo&key2=value2)
+[Pharo web site|alt=Pharo](http://www.pharo.org)
 
 
 Even if we want to manage a list, we use a table because we want to display multiple information side by side.
@@ -114,7 +114,7 @@ In this case, you are adding to your presenter a table widget, which is a very c
 - `addColumn:` is the way you add different table columns (you can have several, if we wanted to have just a single string we would have use a list).
 - `SpCheckBoxTableColumn evaluated: [:aTask | aTask isDone]` will create a table column that will display the status of your TODO task (done or not done).
 - `width: 20` This is to avoid the column to take all available space (otherwise, the table component will distribute the available space proportionally by column).
-- `SpStringTableColumn title: 'Title' evaluated: #title)` Same as `SpCheckBoxTableColumn` but it will create a column that has a title and it will to show a string.  
+- `SpStringTableColumn title: 'Title' evaluated: [:aTask | aTask title])` Same as `SpCheckBoxTableColumn` but it will create a column that has a title and it will to show a string.  
 
 And about the layout definition: 
 
