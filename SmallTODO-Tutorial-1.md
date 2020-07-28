@@ -77,19 +77,20 @@ In Spec2, all components that you create inherit (directly or indirectly) from a
 
 We create a presenter, named `TODOListPresenter` to hold a list of todo items. 
 
-```Smalltalk
+```Pharo
 SpPresenter subclass: #TODOListPresenter
 	slots: {  }
 	classVariables: {  }
 	package: 'TODO'
 ```
 
-This component will contain a list of your todo taks. Let's define your first presenter contents.   
+This component will contain a list of your todo tasks. Let's define your first presenter contents.   
 
 ### Showing tasks
 
-A presenter needs to define a `layout` (how the component will be displayed) and which `widgets` it will show.  
+A presenter needs to define a `layout` (how the component and its subcomponents will be displayed) and which `widgets` it will show.  
 While this is not the best way to organise your presenter, for simpleness we will add all needed behavior in just a single method that you need to implement: `initializePresenters`.
+
 ```Smalltalk
 TODOListPresenter >> initializePresenters
 
