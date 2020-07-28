@@ -86,9 +86,9 @@ SpPresenter subclass: #TODOListPresenter
 
 This component will contain a list of your todo tasks. Let's define your first presenter contents.   
 
-### Showing tasks
+## Showing tasks
 
-A presenter needs to define a `layout` (how the component and its subcomponents will be displayed) and which `widgets` it will show.  
+A presenter needs to define a _layout_ (how the component and its subcomponents will be displayed) and which _widgets_ it will show.  
 While this is not the best way to organise your presenter, for simpleness we will add all needed behavior in just a single method that you need to implement: `initializePresenters`.
 
 ```Smalltalk
@@ -155,7 +155,7 @@ How it will look now?
 
 ![Figure 2](figures/figure2.png)
 
-### Making checkbox columns actionable
+## Making checkbox columns actionable
 
 If you play a little bit with your newly created presenter, you will notice that if you enable the task checkbox and you re-execute the application (reopen the window), nothing changes in the task, it is still marked as not done. This is because no action is yet associated to the checkbox column!  
 To fix this, let's modify `initializePresenters`
@@ -181,7 +181,7 @@ We added
 
 Now you will see everything changes as expected.
 
-### Adding new tasks to your list
+## Adding new tasks to your list
 
 Now, how do we add new elements? We will need different things: 
 
@@ -204,7 +204,7 @@ TODOTaskPresenter >> task: aTask
 	self updatePresenter
 ```
 
-This is very simple, the only thing that is different is that setting a task will update the presenter (because it needs to show the contents of the title). And now we define initialization and update of our presenter.
+This is very simple, the only thing that is different is that setting a task will update the presenter (because it needs to show the contents of the title). And now we define initialization and update of our presenter. SD: I do not get it since the two methods have the same name. 
 
 ```Smalltalk	
 TODOTaskPresenter >> initializePresenters
@@ -215,7 +215,7 @@ TODOTaskPresenter >> initializePresenters
 		add: titlePresenter expand: false;
 		yourself).
 		
-TODOTaskPresenter >> initializePresenters
+TODOTaskPresenter >> updatePresenter
 	titlePresenter text: (aTask title ifNil: [ '' ])
 
 ```
@@ -329,7 +329,7 @@ How it looks now?
 
 ![Figure 3](figures/figure3.png)
 
-### Add edit and remove
+## Add edit and remove
 
 But a task list is not just adding tasks. Sometimes we want to edit a tast or even remove it.  
 Let's add a context menu to table for this, and for it we will always need to modify `initializePresenters`. 
@@ -390,12 +390,15 @@ TODOListPresenter >> editSelectedTask
 		task: todoListPresenter selection selectedItem;
 		openModalWithSpec.
 	self updatePresenter
-	
+```
+
+```Smalltalk	
 TODOListPresenter >> removeSelectedTask
 
 	todoListPresenter selection selectedItem remove.
 	self updatePresenter
 ```
+
 As you see, `editSelectedTask` is almost equal to `addTask` but instead adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
 Remove simply takes the selected item and send the `remove` message.
 
