@@ -104,7 +104,6 @@ TODOListPresenter >> initializePresenters
 		yourself) 
 ```
 
-[Pharo web site|alt=Pharo](http://www.pharo.org)
 
 
 Even if we want to manage a list, we use a table because we want to display multiple information side by side.
