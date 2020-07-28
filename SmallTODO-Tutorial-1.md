@@ -89,13 +89,13 @@ This component will contain a list of your todo tasks. Let's define your first p
 ## Showing tasks
 
 A presenter needs to define a _layout_ (how the component and its subcomponents will be displayed) and which _widgets_ it will show.  
-While this is not the best way to organise your presenter, for simpleness we will add all needed behavior in just a single method that you need to implement: `initializePresenters`.
+While this is not the best way to organise your presenter, for simplicity we will add all needed behavior in just a single method that you need to implement: `initializePresenters`.
 
 ```Smalltalk
 TODOListPresenter >> initializePresenters
 
 	todoListPresenter := self newTable
-		addColumn: ((SpCheckBoxTableColumn evaluated: #isDone) width: 20);
+		addColumn: ((SpCheckBoxTableColumn evaluated: [:aTask | aTask isDone]) width: 20);
 		addColumn: (SpStringTableColumn title: 'Title' evaluated: #title);
 		yourself.
 
@@ -104,12 +104,16 @@ TODOListPresenter >> initializePresenters
 		yourself) 
 ```
 
-In this case, you are adding to your presenter a table widget, which is a very complex component by itself, we will try to explain what each part of it means: 
+[Pharo web site](http://www.pharo.org|alt=Pharo&key2=value2)
+
+
+Even if we want to manage a list, we use a table because we want to display multiple information side by side.
+In this case, you are adding to your presenter a table widget, which is a very complex component by itself. Let us explain what each part of it means: 
 
 - `newTable` is the factory method that will create the table component you are going to use to display your TODO list.
 - `addColumn:` is the way you add different table columns (you can have several, if we wanted to have just a single string we would have use a list).
-- `SpCheckBoxTableColumn evaluated: #isDone` will create a table column that will display the status of your TODO task (done or not done).
-- `width: 20` This is to avoid the column to take all available space (otherwise, the table component will distribute the available space proportionaly by column).
+- `SpCheckBoxTableColumn evaluated: [:aTask | aTask isDone]` will create a table column that will display the status of your TODO task (done or not done).
+- `width: 20` This is to avoid the column to take all available space (otherwise, the table component will distribute the available space proportionally by column).
 - `SpStringTableColumn title: 'Title' evaluated: #title)` Same as `SpCheckBoxTableColumn` but it will create a column that has a title and it will to show a string.  
 
 And about the layout definition: 
