@@ -9,7 +9,7 @@ It will look like Figure *@taskManager@*.
 
 ![The Task List Manager.|label=taskManager](figures/figure4.png)
 
-
+![First full version of the Task List Manager.](figures/figure4.png?label=task4&width=80)
 
 ## Requirements
 
