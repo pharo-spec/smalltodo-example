@@ -2,7 +2,7 @@
 
 ## Introduction
 This is a small tutorial to give a first look at the world of Spec2 and developing application with it.  
-It should not be taken as a comprehensive guide since a lot of details and feature will be let out explicitly to avoid difficult issues.  
+It should not be taken as a comprehensive guide since a lot of details and featurs are left out explicitly to avoid difficult issues. 
   
 We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.   
 
@@ -22,7 +22,8 @@ VOMemoryRepository new enableSingleton.
 ```
 
 ### A TODOTask class
-Since this application will show and edit a simple TODO list, we need to create a class that models the task. We are going to have tge simplest approach possible for this example, but is clear it can be a lot more complex.
+Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but is clear it can be a lot more complex.
+
 ```Smalltalk
 Object subclass: #TODOTask
 	slots: { #done. #title }
@@ -53,7 +54,7 @@ TODOTask new title: 'Task Two'; save.
 
 ## Creating your application
 
-Every application need an entry point, a place where to configure the basics and start the GUI. Compiled programs have like C have `main()`, Cocoa have the class `NSApplication` and you add a *delegate* to add your configuration and Gtk3 has `GtkApplication`.  
+Every application needs an entry point, a place where to configure the basics and start the GUI. Compiled programs have like C have `main()`, Cocoa have the class `NSApplication` and you add a *delegate* to add your configuration and Gtk3 has `GtkApplication`.  
 Pharo is a living environment where many things can be executed at same time, and because of that Spec2 also needs its own entry point: Your application needs to be independent of the rest of system! To do that, Spec2 needs you to extend the class `SpApplication`.  
 ```Smalltalk
 SpApplication subclass: #TODOApplication
@@ -62,8 +63,11 @@ SpApplication subclass: #TODOApplication
 	package: 'TODO'
 ```
 
-And you will also need your main window, a TODO list.  
-In Spec2, all components you create extend a single base class: `SpPresenter`. A "presenter" is how you expose (present) your data to the user.  
+Note that an application is not a visual element, it manages the application and information that may be displayed visually such as icons.
+
+You will also need your main window, a TODO list.  
+In Spec2, all components you create inherits from a single root base class: `SpPresenter`. A _presenter_ is how you expose (present) your data to the user.  
+
 ```Smalltalk
 SpPresenter subclass: #TODOListPresenter
 	slots: {  }
