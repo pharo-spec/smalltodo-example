@@ -7,7 +7,7 @@ It should not be taken as a comprehensive guide since a lot of details and featu
 We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.
 It will look like Figure *@taskManager@*.
 
-![The Task List Manager.](figures/figure4.png&label=taskManager)
+![The Task List Manager.|label=taskManager](figures/figure4.png)
 
 
 
