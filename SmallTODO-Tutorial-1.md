@@ -78,10 +78,11 @@ In Spec2, all components that you create inherit (directly or indirectly) from a
 
 
 We create a presenter, named `TODOListPresenter` to represent the logic of managing a list of todo items. 
+This presenter defines an instance variables to refer to the list that will effectively contains the tasks.
 
 ```Smalltalk
 SpPresenter subclass: #TODOListPresenter
-	slots: {  }
+	slots: { #todoListPresenter }
 	classVariables: {  }
 	package: 'TODO'
 ```
