@@ -2,7 +2,7 @@
 
 ## Introduction
 This is a small tutorial to give a first look at the world of Spec2 and developing application with it.  
-It should not be taken as a comprehensive guide since a lot of details and featurs are left out explicitly to avoid difficult issues. 
+It should not be taken as a comprehensive guide since a lot of details and features are left out explicitly to avoid difficult issues. 
   
 We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.
 It will look like Figure *@taskManager@*.
@@ -29,7 +29,7 @@ VOMemoryRepository new enableSingleton.
 ```
 
 ### A TODOTask class
-Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but is clear it can be a lot more complex.
+Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but it is clear that it can be a lot more complex.
 
 ```Smalltalk
 Object subclass: #TODOTask
@@ -78,10 +78,11 @@ In Spec2, all components that you create inherit (directly or indirectly) from a
 
 
 We create a presenter, named `TODOListPresenter` to represent the logic of managing a list of todo items. 
+This presenter defines an instance variables to refer to the list that will effectively contains the tasks.
 
 ```Smalltalk
 SpPresenter subclass: #TODOListPresenter
-	slots: {  }
+	slots: { #todoListPresenter }
 	classVariables: {  }
 	package: 'TODO'
 ```
@@ -120,7 +121,7 @@ And about the layout definition:
 
 - `SpBoxLayout newVertical` creates a box layout that distributes elements in vertical arrangement.
 - `add: todoListPresenter` adds the list as a subcomponent of our presenter. Here we only have one but you can have as many subcomponents you want. Note that by default, the box layout distributes all elements in proportional way (since this is the only element for the moment, it will take 100% of the avalaible space.  
-
+Note that often we define the layout in a separated method called `defaultSpec` and that will be renamed in the future. This separation allows a better modularity.
 And now, we need to give our TODO list the tasks to display:
 
 ```Smalltalk
@@ -132,6 +133,16 @@ TODOListPresenter >> updatePresenter
 Note we send `asOrderedCollection` message to the list of tasks. This is because a table presenter receives an `OrderedCollection` as items, so we make sure we have the list as the presenter expects.  
 
 ## How does this look? 
+
+To be able to open the application we define an helper method in `TODOApplication`.
+
+```
+TODOApplication >> run 
+	"self new run"
+	
+	(self new: TODOListPresenter) openWithSpec 
+```
+
 Now we can open our task list manager as follows:
 
 ```Smalltalk
