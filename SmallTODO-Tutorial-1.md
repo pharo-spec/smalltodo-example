@@ -121,7 +121,7 @@ And about the layout definition:
 
 - `SpBoxLayout newVertical` creates a box layout that distributes elements in vertical arrangement.
 - `add: todoListPresenter` adds the list as a subcomponent of our presenter. Here we only have one but you can have as many subcomponents you want. Note that by default, the box layout distributes all elements in proportional way (since this is the only element for the moment, it will take 100% of the avalaible space.  
-
+Note that often we define the layout in a separated method called `defaultSpec` and that will be renamed in the future. This separation allows a better modularity.
 And now, we need to give our TODO list the tasks to display:
 
 ```Smalltalk
