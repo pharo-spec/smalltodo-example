@@ -2,7 +2,7 @@
 
 ## Introduction
 This is a small tutorial to give a first look at the world of Spec2 and developing application with it.  
-It should not be taken as a comprehensive guide since a lot of details and featurs are left out explicitly to avoid difficult issues. 
+It should not be taken as a comprehensive guide since a lot of details and features are left out explicitly to avoid difficult issues. 
   
 We will build a small TODO application that will connect a couple of components and it will show some interesting characteristics.
 It will look like Figure *@taskManager@*.
@@ -29,7 +29,7 @@ VOMemoryRepository new enableSingleton.
 ```
 
 ### A TODOTask class
-Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but is clear it can be a lot more complex.
+Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but it is clear that it can be a lot more complex.
 
 ```Smalltalk
 Object subclass: #TODOTask
@@ -132,6 +132,12 @@ TODOListPresenter >> updatePresenter
 Note we send `asOrderedCollection` message to the list of tasks. This is because a table presenter receives an `OrderedCollection` as items, so we make sure we have the list as the presenter expects.  
 
 ## How does this look? 
+
+To be able to open the application we define an helper method in `TODOApplication`.
+
+```
+```
+
 Now we can open our task list manager as follows:
 
 ```Smalltalk
