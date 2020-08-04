@@ -136,6 +136,10 @@ Note we send `asOrderedCollection` message to the list of tasks. This is because
 To be able to open the application we define an helper method in `TODOApplication`.
 
 ```
+TODOApplication >> run 
+	"self new run"
+	
+	(self new: TODOListPresenter) openWithSpec 
 ```
 
 Now we can open our task list manager as follows:
