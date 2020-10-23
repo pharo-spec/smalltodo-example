@@ -440,8 +440,8 @@ You need to load the Gtk backend as follows:
 
 ```Smalltalk
 Metacello new 
-	repository: 'github://pharo-spec/mars-gtk';
-	baseline: 'Mars';
+	repository: 'github://pharo-spec/Spec-Gtk';
+	baseline: 'SpecGtk';
 	load.
 ```
 
