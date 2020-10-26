@@ -76,7 +76,6 @@ Note that an application is not a visual element, it manages the application and
 You will also need your main window, a TODO list.  
 In Spec2, all components that you create inherit (directly or indirectly) from a single root base class: `SpPresenter`. A _presenter_ is how you expose (present) your data to the user.  
 
-
 We create a presenter, named `TODOListPresenter` to represent the logic of managing a list of todo items. 
 
 ```Smalltalk
@@ -132,12 +131,19 @@ TODOListPresenter >> updatePresenter
 Note we send `asOrderedCollection` message to the list of tasks. This is because a table presenter receives an `OrderedCollection` as items, so we make sure we have the list as the presenter expects.  
 
 ## How does this look? 
-Now we can open our task list manager as follows:
+Now we can open our task list manager. But first, we need to associate our presenter with our application. We do this by implementing the method `start` on our application: 
+
+```Smalltalk
+TODOApplication >> start
+
+	(TODOListPresenter newApplication: self) openWithSpec
+```
+
+Now yes, we can execute our application as follow:
 
 ```Smalltalk
 TODOApplication new run.
 ```
-
 
 ![Figure 1](figures/figure1.png?width=80|label=firstfig)
 
