@@ -80,7 +80,7 @@ We create a presenter, named `TODOListPresenter` to represent the logic of manag
 
 ```Smalltalk
 SpPresenter subclass: #TODOListPresenter
-	slots: {  }
+	slots: { #todoListPresenter }
 	classVariables: {  }
 	package: 'TODO'
 ```
