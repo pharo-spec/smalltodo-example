@@ -48,6 +48,9 @@ TODOTask >> done: aBoolean
 
 TODOTask >> isDone
 	^ done
+
+TODOTask class >> isVoyageRoot
+	^ true
 	
 TODOTask >> initialize
 
