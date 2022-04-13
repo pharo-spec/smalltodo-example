@@ -45,6 +45,12 @@ TODOTask >> title: aString
 	
 TODOTask >> done: aBoolean
 	done := aBoolean
+
+TODOTask >> isDone
+	^ done
+
+TODOTask class >> isVoyageRoot
+	^ true
 	
 TODOTask >> initialize
 
