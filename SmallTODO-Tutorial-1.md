@@ -45,6 +45,12 @@ TODOTask >> title: aString
 	
 TODOTask >> done: aBoolean
 	done := aBoolean
+
+TODOTask >> isDone
+	^ done
+
+TODOTask class >> isVoyageRoot
+	^ true
 	
 TODOTask >> initialize
 
@@ -75,7 +81,6 @@ Note that an application is not a visual element, it manages the application and
 
 You will also need your main window, a TODO list.  
 In Spec2, all components that you create inherit (directly or indirectly) from a single root base class: `SpPresenter`. A _presenter_ is how you expose (present) your data to the user.  
-
 
 We create a presenter, named `TODOListPresenter` to represent the logic of managing a list of todo items. 
 This presenter defines an instance variables to refer to the list that will effectively contains the tasks.
@@ -143,12 +148,11 @@ TODOApplication >> run
 	(self new: TODOListPresenter) openWithSpec 
 ```
 
-Now we can open our task list manager as follows:
+Now yes, we can execute our application as follow:
 
 ```Smalltalk
 TODOApplication new run.
 ```
-
 
 ![Figure 1](figures/figure1.png?width=80|label=firstfig)
 
@@ -451,8 +455,8 @@ You need to load the Gtk backend as follows:
 
 ```Smalltalk
 Metacello new 
-	repository: 'github://pharo-spec/mars-gtk';
-	baseline: 'Mars';
+	repository: 'github://pharo-spec/Spec-Gtk';
+	baseline: 'SpecGtk';
 	load.
 ```
 
