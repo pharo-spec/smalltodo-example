@@ -8,10 +8,28 @@ Class {
 	#category : #TODO
 }
 
-{ #category : #testing }
-TODOTask class >> isVoyageRoot [
+{ #category : #accessing }
+TODOTask class >> new [
+	|instance|
+	instance := super new.
+	self tasks add: instance. 
+	^ instance 
+]
 
-	^ true
+{ #category : #removing }
+TODOTask class >> remove: aTODOTask [ 
+	tasks remove: aTODOTask 
+]
+
+{ #category : #accessing }
+TODOTask class >> reset [
+	<script>
+	tasks := OrderedCollection new.
+]
+
+{ #category : #accessing }
+TODOTask class >> tasks [
+	^ tasks ifNil: [ tasks := OrderedCollection new ]
 ]
 
 { #category : #accessing }
@@ -30,6 +48,11 @@ TODOTask >> initialize [
 TODOTask >> isDone [
 
 	^ done
+]
+
+{ #category : #removing }
+TODOTask >> remove [
+	self class remove: self
 ]
 
 { #category : #accessing }

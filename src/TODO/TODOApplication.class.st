@@ -7,5 +7,5 @@ Class {
 { #category : #running }
 TODOApplication >> start [
 
-	(self new: TODOListPresenter) openWithSpec 
+	(TODOListPresenter newApplication: self) open
 ]
