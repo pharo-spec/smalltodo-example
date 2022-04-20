@@ -442,7 +442,7 @@ TODOListPresenter >> removeSelectedTask
 	self updatePresenter
 ```
 
-As you see, `editSelectedTask` is almost equal to `addTask` but instead of adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
+As yogit u see, `editSelectedTask` is almost equal to `addTask` but instead of adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
 Remove simply takes the selected item and send the `remove` message.
 
 ![First full version of the Task List Manager ](figures/figure4.png?width=80&label=fig4)
