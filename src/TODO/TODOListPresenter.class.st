@@ -7,23 +7,22 @@ Class {
 	#category : #TODO
 }
 
-{ #category : #actions }
+{ #category : #initialization }
 TODOListPresenter >> addTask [
 
 	(TODOTaskPresenter newApplication: self application)
 		task: TODOTask new;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 TODOListPresenter >> editSelectedTask [
 
 	(TODOTaskPresenter newApplication: self application)
 		task: todoListPresenter selection selectedItem;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
-	
 ]
 
 { #category : #initialization }
@@ -31,12 +30,14 @@ TODOListPresenter >> initializePresenters [
 	| addButton |
 
 	todoListPresenter := self newTable
-		addColumn: ((SpCheckBoxTableColumn evaluated: #isDone) 
+		addColumn: ((SpCheckBoxTableColumn evaluated: [:task | task isDone]) 
 			width: 20;
 			onActivation: [ :task | task done: true ];
 			onDeactivation: [ :task | task done: false ];
 			yourself);
-		addColumn: (SpStringTableColumn title: 'Title' evaluated: #title);
+		addColumn: (SpStringTableColumn 
+						title: 'Title' 
+						evaluated: [:task | task title]);
 		contextMenu: self todoListContextMenu;
 		yourself.
 
@@ -63,7 +64,7 @@ TODOListPresenter >> initializeWindow: aWindowPresenter [
 		initialExtent: 500@500
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 TODOListPresenter >> removeSelectedTask [
 
 	todoListPresenter selection selectedItem remove.
@@ -74,13 +75,16 @@ TODOListPresenter >> removeSelectedTask [
 TODOListPresenter >> todoListContextMenu [
 
 	^ self newMenu 
-		addItem: [ :item | item name: 'Edit...'; action: [ self editSelectedTask ] ];
-		addItem: [ :item | item name: 'Remove'; action: [ self removeSelectedTask ] ]
-		
+		addItem: [ :item | item 
+						name: 'Edit...'; 
+						action: [ self editSelectedTask ] ];
+		addItem: [ :item | item 
+						name: 'Remove'; 
+						action: [ self removeSelectedTask ] ]
 ]
 
 { #category : #initialization }
 TODOListPresenter >> updatePresenter [
 
-	todoListPresenter items: TODOTask selectAll asOrderedCollection
+	todoListPresenter items: TODOTask tasks asOrderedCollection
 ]

@@ -8,35 +8,34 @@ Class {
 	#category : #TODO
 }
 
-{ #category : #actions }
+{ #category : #accessing }
 TODOTaskPresenter >> accept [
 
 	self task 
-		title: titlePresenter text;
-		save
+		title: titlePresenter text.
 ]
 
-{ #category : #initialization }
-TODOTaskPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+{ #category : #accessing }
+TODOTaskPresenter >> initializeDialogWindow: 	aDialogWindowPresenter [
 
 	aDialogWindowPresenter 
 		title: 'New task';
 		initialExtent: 350@120;
-		addButton: 'Accept' do: [ :dialog | 
+		addButton: 'Accept' do: [ :dialog |
 			self accept.
 			dialog close ];
 		addButton: 'Cancel' do: [ :dialog |
 			dialog close ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 TODOTaskPresenter >> initializePresenters [
 
 	titlePresenter := self newTextInput.
 
 	self layout: (SpBoxLayout newVertical 
-		add: titlePresenter expand: false;
-		yourself).
+						add: titlePresenter expand: false;
+						yourself).
 ]
 
 { #category : #accessing }
@@ -47,5 +46,11 @@ TODOTaskPresenter >> task [
 { #category : #accessing }
 TODOTaskPresenter >> task: aTask [
 	task := aTask.
-	titlePresenter text: (aTask title ifNil: [ '' ])
+	self updatePresenter
+]
+
+{ #category : #accessing }
+TODOTaskPresenter >> updatePresenter [
+	titlePresenter 
+		text: (task ifNil: [ '' ] ifNotNil: [task title])
 ]
