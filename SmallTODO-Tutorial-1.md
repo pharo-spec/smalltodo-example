@@ -12,21 +12,7 @@ It will look like Figure *@taskManager@*.
 
 
 ## Requirements
-
-We will use Voyage to keep our small database, but since this will not be very big and we want to keep things simple, we will use an "in-memory" version of it. You can install it in your image executing:
-
-```Smalltalk
-Metacello new 
-	repository: 'github://pharo-nosql/voyage';
-	baseline: 'Voyage';
-	load: 'memory tests'.
-```
-
-Then you can create the in-memory repository we are going to use during this tutorial.
-
-```Smalltalk
-VOMemoryRepository new enableSingleton.
-```
+Any additionnal tool is needed for this tutorial.
 
 ### A TODOTask class
 Since this application will show and support the edition of a simple TODO list, we need to create a class that models the task. We are going to have the simplest approach possible for this example, but it is clear that it can be a lot more complex.
@@ -48,21 +34,46 @@ TODOTask >> done: aBoolean
 
 TODOTask >> isDone
 	^ done
-
-TODOTask class >> isVoyageRoot
-	^ true
 	
 TODOTask >> initialize
 
 	super initialize.
 	self done: false
 ```
+How can we save the created tasks. Let `TODOTask class handles that`.
+```smalltalk
+TODOTask class
+	instanceVariableNames: 'tasks'
+	
+TODOTask class >> tasks
+	^ tasks ifNil: [ tasks := OrderedCollection new ]
+	
+TODOTask class >> new
+	|instance|
+	instance := super new.
+	self tasks add: instance. 
+	^ instance 
+```
 
 And let's create a couple of testing tasks: 
 
 ```Smalltalk
-TODOTask new title: 'Task One'; save.
-TODOTask new title: 'Task Two'; save.
+TODOTask tasks size. "0"
+
+TODOTask new
+	title: 'Task One'.
+
+TODOTask new
+	title: 'Task Two'.
+	
+TODOTask tasks size. "2"
+```
+
+Sometimes, we will need to clear the created tasks:
+```Smalltalk
+TODOTask class >> reset
+
+	tasks := OrderedCollection new.
 ```
 
 ## Creating your application
@@ -132,10 +143,11 @@ And now, we need to give our TODO list the tasks to display:
 ```Smalltalk
 TODOListPresenter >> updatePresenter
 
-	todoListPresenter items: TODOTask selectAll asOrderedCollection
+	todoListPresenter items: TODOTask tasks asOrderedCollection
 ```
 
-Note we send `asOrderedCollection` message to the list of tasks. This is because a table presenter receives an `OrderedCollection` as items, so we make sure we have the list as the presenter expects.  
+Note we send `asOrderedCollection` message to the list of tasks. This is because a table presenter receives an `OrderedCollection` as items, so we make sure we have the list as the presenter expects.
+(But if you have followed carefully, `TODOTask class tasks` already returns an OrderedCollection. You can then avoid the message asOrderedCollection. We just want you to keep in mind that **a table presenter receives an `OrderedCollection` as items**).
 
 ## How does this look? 
 
@@ -247,7 +259,8 @@ TODOTaskPresenter >> initializePresenters
 
 ```Smalltalk			
 TODOTaskPresenter >> updatePresenter
-	titlePresenter text: (aTask title ifNil: [ '' ])
+	titlePresenter 
+		text: (task ifNil: [ '' ] ifNotNil: [task title])
 
 ```
 
@@ -278,14 +291,13 @@ Here, along with the already known `title:` and `initialExtent:` we added
 - `addButton: 'Save' do: [ ... ]`. This will add buttons to our dialog window. And you need to define its behavior (the `accept` method).
 - `addButton: 'Cancel' do: [ ... ]`. This is the same as the positive action, but here we do not want to do anything, that's why we just send `dialog close`.
 
-How would be the `accept` method? Thanks to Voyage, very simple.
+How would be the `accept` method ?
 
 ```Smalltalk
 TODOTaskPresenter >> accept
 
 	self task 
-		title: titlePresenter text;
-		save.
+		title: titlePresenter text.
 ```
 
 **Tip:** You can try your dialog even if not yet integrated to your application by executing 
@@ -319,7 +331,8 @@ TODOListPresenter >> initializePresenters
 		action: [ self addTask ];
 		yourself.
 
-	self layout: (SpBoxLayout newVertical 
+	self layout: (SpBoxLayout newVertical
+		spacing: 5;
 		add: todoListPresenter;
 		add: (SpBoxLayout newHorizontal
 				addLast: addButton expand: false;
@@ -383,7 +396,7 @@ TODOListPresenter >> initializePresenters
 			yourself);
 		addColumn: (SpStringTableColumn 
 						title: 'Title' 
-						evaluated: [:task | task title);
+						evaluated: [:task | task title]);
 		contextMenu: self todoListContextMenu;
 		yourself.
 
@@ -444,6 +457,15 @@ TODOListPresenter >> removeSelectedTask
 
 As yogit u see, `editSelectedTask` is almost equal to `addTask` but instead of adding a new task, it takes the selected task in our table by sending `todoListPresenter selection selectedItem`.  
 Remove simply takes the selected item and send the `remove` message.
+
+Now we need to make aTODOTask understand this last message.
+```smalltalk
+TODOTask >> remove
+    self class remove: self
+    
+TODOTask class >> tasks
+	tasks remove: aTODOTask 
+```
 
 ![First full version of the Task List Manager ](figures/figure4.png?width=80&label=fig4)
 
