@@ -163,7 +163,7 @@ To fix this we implement another method `initializeWindow:`, which sets the valu
 
 
 ```Smalltalk
-initializeWindow: aWindowPresenter
+TODOListPresenter >> initializeWindow: aWindowPresenter
 
 	aWindowPresenter 
 		title: 'TODO List';
@@ -247,7 +247,7 @@ TODOTaskPresenter >> initializePresenters
 
 ```Smalltalk			
 TODOTaskPresenter >> updatePresenter
-	titlePresenter text: (aTask title ifNil: [ '' ])
+	titlePresenter text: (task ifNil: [ '' ] ifNotNil: [ task title ])
 
 ```
 
@@ -255,7 +255,7 @@ This is almost equal to our list presenter, but there are a couple of new elemen
 
 - `newTextInput` creates a text input presenter to add to our layout.
 - `add: titlePresenter expand: false` Along with the addition of the presenter, we also tell the layout that it should not expand the text input. The `expand` property indicates the layout will not resize the presenter to take the whole available space.
-- `titlePresenter text: (aTask title ifNil: [ '' ])` changes the contents of our text input presenter.
+- `titlePresenter text: (task ifNil: [ '' ] ifNotNil: [ task title ])` changes the contents of our text input presenter.
 
 Now, we need to define this presenter to act as a dialog.  
 And we do it in the same way (almost) we defined `TODOListPresenter` as window. But to define a *dialog presenter* we need to define the method `initializeDialogWindow:`.
@@ -454,10 +454,13 @@ Since we are developing a Spec2 application, we can decide to use Gtk as a backe
 You need to load the Gtk backend as follows:
 
 ```Smalltalk
-Metacello new 
+Metacello new
 	repository: 'github://pharo-spec/Spec-Gtk';
 	baseline: 'SpecGtk';
-	load.
+	onConflict: [ :e | e useIncoming ];
+	onUpgrade: [ :e | e useIncoming ];
+	ignoreImage;
+	load
 ```
 
 (Do not worry if you have a couple of messages asking to "load" or "merge" a Spec2 package, this is because the baseline has Spec2 in its dependencies and it will "touch" the packages while loading the Gtk backend).
