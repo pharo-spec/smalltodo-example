@@ -145,7 +145,7 @@ To be able to open the application we define an helper method in `TODOApplicatio
 TODOApplication >> run 
 	"self new run"
 	
-	(self new: TODOListPresenter) openWithSpec 
+	(self new: TODOListPresenter) open 
 ```
 
 Now yes, we can execute our application as follow:
@@ -293,7 +293,7 @@ TODOTaskPresenter >> accept
 ```Smalltalk
 TODOTaskPresenter new 
 	task: TODOTask new;
-	openModalWithSpec.
+	openModal.
 ```
 
 So, now we can use it. And to use it we need to define how we want to present that "add task" option. It can be a toolbar, an actionbar or a simple button. To remain simple and expand a little what we already know about layouts, we will use a simple button and for that, we go back again to the method `TODOListPresenter >> initializePresenters`.
@@ -351,7 +351,7 @@ TODOListPresenter >> addTask
 
 	(TODOTaskPresenter newApplication: self application) 
 		task: TODOTask new;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
 ```
 
@@ -359,7 +359,7 @@ What we did here?
 
 - `TODOTaskPresenter newApplication: self application` we create the dialog presenter but not by calling `new` as usual but `newApplication:` and passing the application of current presenter. This is **fundamentally important** to keep your dialogs chained as part of your application. If you skip this, what will happen is that the presenter will be created in the *default application* of Pharo, which is called `NullApplication`. You do not want that. 
 - `task:` set a new task.
-- `openModalWithSpec` will open the dialog in modal way. It means the execution of your program will be stop until you accept or cancel your dialog.
+- `openModal` will open the dialog in modal way. It means the execution of your program will be stop until you accept or cancel your dialog.
 - `updatePresenter` will call the method we defined, to update your list.
 
 The following figure shows how the task manager looks like.
@@ -431,7 +431,7 @@ TODOListPresenter >> editSelectedTask
 
 	(TODOTaskPresenter newApplication: self application) 
 		task: todoListPresenter selection selectedItem;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
 ```
 
