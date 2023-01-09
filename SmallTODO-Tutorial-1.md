@@ -145,7 +145,7 @@ To be able to open the application we define an helper method in `TODOApplicatio
 TODOApplication >> run 
 	"self new run"
 	
-	(self new: TODOListPresenter) openWithSpec 
+	(self new: TODOListPresenter) open 
 ```
 
 Now yes, we can execute our application as follow:
@@ -163,7 +163,7 @@ To fix this we implement another method `initializeWindow:`, which sets the valu
 
 
 ```Smalltalk
-initializeWindow: aWindowPresenter
+TODOListPresenter >> initializeWindow: aWindowPresenter
 
 	aWindowPresenter 
 		title: 'TODO List';
@@ -247,7 +247,7 @@ TODOTaskPresenter >> initializePresenters
 
 ```Smalltalk			
 TODOTaskPresenter >> updatePresenter
-	titlePresenter text: (aTask title ifNil: [ '' ])
+	titlePresenter text: (task ifNil: [ '' ] ifNotNil: [ task title ])
 
 ```
 
@@ -255,7 +255,7 @@ This is almost equal to our list presenter, but there are a couple of new elemen
 
 - `newTextInput` creates a text input presenter to add to our layout.
 - `add: titlePresenter expand: false` Along with the addition of the presenter, we also tell the layout that it should not expand the text input. The `expand` property indicates the layout will not resize the presenter to take the whole available space.
-- `titlePresenter text: (aTask title ifNil: [ '' ])` changes the contents of our text input presenter.
+- `titlePresenter text: (task ifNil: [ '' ] ifNotNil: [ task title ])` changes the contents of our text input presenter.
 
 Now, we need to define this presenter to act as a dialog.  
 And we do it in the same way (almost) we defined `TODOListPresenter` as window. But to define a *dialog presenter* we need to define the method `initializeDialogWindow:`.
@@ -293,7 +293,7 @@ TODOTaskPresenter >> accept
 ```Smalltalk
 TODOTaskPresenter new 
 	task: TODOTask new;
-	openModalWithSpec.
+	openModal.
 ```
 
 So, now we can use it. And to use it we need to define how we want to present that "add task" option. It can be a toolbar, an actionbar or a simple button. To remain simple and expand a little what we already know about layouts, we will use a simple button and for that, we go back again to the method `TODOListPresenter >> initializePresenters`.
@@ -351,7 +351,7 @@ TODOListPresenter >> addTask
 
 	(TODOTaskPresenter newApplication: self application) 
 		task: TODOTask new;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
 ```
 
@@ -359,7 +359,7 @@ What we did here?
 
 - `TODOTaskPresenter newApplication: self application` we create the dialog presenter but not by calling `new` as usual but `newApplication:` and passing the application of current presenter. This is **fundamentally important** to keep your dialogs chained as part of your application. If you skip this, what will happen is that the presenter will be created in the *default application* of Pharo, which is called `NullApplication`. You do not want that. 
 - `task:` set a new task.
-- `openModalWithSpec` will open the dialog in modal way. It means the execution of your program will be stop until you accept or cancel your dialog.
+- `openModal` will open the dialog in modal way. It means the execution of your program will be stop until you accept or cancel your dialog.
 - `updatePresenter` will call the method we defined, to update your list.
 
 The following figure shows how the task manager looks like.
@@ -431,7 +431,7 @@ TODOListPresenter >> editSelectedTask
 
 	(TODOTaskPresenter newApplication: self application) 
 		task: todoListPresenter selection selectedItem;
-		openModalWithSpec.
+		openModal.
 	self updatePresenter
 ```
 
@@ -454,10 +454,13 @@ Since we are developing a Spec2 application, we can decide to use Gtk as a backe
 You need to load the Gtk backend as follows:
 
 ```Smalltalk
-Metacello new 
+Metacello new
 	repository: 'github://pharo-spec/Spec-Gtk';
 	baseline: 'SpecGtk';
-	load.
+	onConflict: [ :e | e useIncoming ];
+	onUpgrade: [ :e | e useIncoming ];
+	ignoreImage;
+	load
 ```
 
 (Do not worry if you have a couple of messages asking to "load" or "merge" a Spec2 package, this is because the baseline has Spec2 in its dependencies and it will "touch" the packages while loading the Gtk backend).
